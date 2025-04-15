@@ -1,27 +1,46 @@
 package main
 
 import (
-    "fmt"
-    "os"
-    "Mission-Get-Rescued/internal/game"
+	"Mission-Get-Rescued/internal/game"
+	"fmt"
 )
 
 func main() {
-    fmt.Println("Welcome to Mission: Get Rescued!")
+	fmt.Println("Welcome to Mission: Get Rescued!")
 
-    engine := game.NewGameEngine()
-    if err := engine.StartGame(); err != nil {
-        fmt.Println("Error starting the game:", err)
-        os.Exit(1)
-    }
+	engine := game.NewGameEngine()
+	engine.StartGame()
 
-    for {
-        if err := engine.UpdateGame(); err != nil {
-            fmt.Println("Error updating the game:", err)
-            break
-        }
-    }
+	// Define the player outside the loop
+	player := game.Player{
+		Health: 100,
+		Hunger: 50,
+		Thirst: 50,
+	}
 
-    engine.EndGame()
-    fmt.Println("Thank you for playing!")
+	for engine.IsRunningGame() {
+		var action string
+		fmt.Println("Choose an action (eat/drink):")
+		fmt.Scanln(&action)
+
+		// Update the player's state based on the action
+		game.ExecuteAction(action, &player)
+
+		// Trigger an event based on conditions
+		game.TriggerEvent(&player)
+
+		// Check if the player is still alive
+		if !game.CheckSurvival(&player) {
+			engine.EndGame()
+			fmt.Println("You have died. Game over.")
+			break
+		}
+
+		// Print the player's current status
+		fmt.Printf("Player Status - Health: %d, Hunger: %d, Thirst: %d\n", player.Health, player.Hunger, player.Thirst)
+		fmt.Println("Survive until rescued!")
+	}
+
+	engine.EndGame()
+	fmt.Println("Thank you for playing!")
 }

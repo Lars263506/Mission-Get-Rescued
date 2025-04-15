@@ -3,32 +3,29 @@ package game
 import "fmt"
 
 type GameEngine struct {
-    playerStatus string
-    events       []string
-    isRunning    bool
+	playerStatus string
+	events       []string
+	isRunning    bool
 }
 
 func NewGameEngine() *GameEngine {
-    return &GameEngine{
-        playerStatus: "alive",
-        events:       []string{},
-        isRunning:    false,
-    }
+	return &GameEngine{
+		playerStatus: "alive",
+		events:       []string{},
+		isRunning:    false,
+	}
 }
 
-func (g *GameEngine) StartGame() {
-    g.isRunning = true
-    fmt.Println("Game started. Survive until rescued!")
+func (e *GameEngine) StartGame() {
+	e.isRunning = true
+	fmt.Println("Game started. Survive until rescued!")
 }
 
-func (g *GameEngine) UpdateGame() {
-    if g.isRunning {
-        // Update game state logic here
-        fmt.Println("Updating game state...")
-    }
+func (e *GameEngine) IsRunningGame() bool {
+	return e.isRunning
 }
 
-func (g *GameEngine) EndGame() {
-    g.isRunning = false
-    fmt.Println("Game over. You did not survive.")
+func (e *GameEngine) EndGame() {
+	e.isRunning = false
+	fmt.Println("Game over. You did not survive.")
 }
