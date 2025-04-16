@@ -16,10 +16,8 @@ func clearConsole() {
 }
 
 func main() {
-	figure := figure.NewFigure("Mission: Get Rescued", "", true)
-	figure.Print()
-
-	fmt.Println("Welcome to Mission: Get Rescued!")
+	titleFigure := figure.NewFigure("Mission: Get Rescued", "", true)
+	titleFigure.Print()
 
 	engine := game.NewGameEngine()
 	engine.StartGame()
@@ -32,13 +30,15 @@ func main() {
 	}
 
 	for engine.IsRunningGame() {
-		var action string
-		fmt.Println("Choose an action (eat/drink):")
-		fmt.Scanln(&action)
-		clearConsole()
+		clearConsole() // Clear the console at the start of each iteration
 
-		// Update the player's state based on the action
-		game.ExecuteAction(action, &player)
+		figure := figure.NewFigure("Mission: Get Rescued", "", true)
+		figure.Print()
+
+		fmt.Println("-----------------------------------------------------------------------------------------------------------------------------")
+
+		// Print the player's current status
+		fmt.Printf("Player Status - Health: %d, Hunger: %d, Thirst: %d\n", player.Health, player.Hunger, player.Thirst)
 
 		// Trigger an event based on conditions
 		game.TriggerEvent(&player)
@@ -50,9 +50,13 @@ func main() {
 			break
 		}
 
-		// Print the player's current status
-		fmt.Printf("Player Status - Health: %d, Hunger: %d, Thirst: %d\n", player.Health, player.Hunger, player.Thirst)
-		fmt.Println("Survive until rescued!")
+		// Prompt the player for the next action
+		fmt.Println("Choose an action for the next turn (eat/drink):")
+		var action string
+		fmt.Scanln(&action)
+
+		// Update the player's state based on the action
+		game.ExecuteAction(action, &player)
 	}
 
 	engine.EndGame()
