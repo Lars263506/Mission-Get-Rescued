@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+
+	"github.com/common-nighthawk/go-figure"
 )
 
 func clearConsole() {
@@ -14,6 +16,9 @@ func clearConsole() {
 }
 
 func main() {
+	figure := figure.NewFigure("Mission: Get Rescued", "", true)
+	figure.Print()
+
 	fmt.Println("Welcome to Mission: Get Rescued!")
 
 	engine := game.NewGameEngine()
