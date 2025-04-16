@@ -3,7 +3,15 @@ package main
 import (
 	"Mission-Get-Rescued/internal/game"
 	"fmt"
+	"os"
+	"os/exec"
 )
+
+func clearConsole() {
+	cmd := exec.Command("cmd", "/c", "cls") // Windows-specific command
+	cmd.Stdout = os.Stdout
+	cmd.Run()
+}
 
 func main() {
 	fmt.Println("Welcome to Mission: Get Rescued!")
@@ -22,6 +30,7 @@ func main() {
 		var action string
 		fmt.Println("Choose an action (eat/drink):")
 		fmt.Scanln(&action)
+		clearConsole()
 
 		// Update the player's state based on the action
 		game.ExecuteAction(action, &player)
