@@ -15,7 +15,14 @@ func clearConsole() {
 	cmd.Run()
 }
 
+func setFullscreen() {
+	cmd := exec.Command("powershell", "-Command", "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait('%{ENTER}')")
+	cmd.Run()
+}
+
 func main() {
+	setFullscreen() // Set the console to fullscreen mode
+
 	titleFigure := figure.NewFigure("Mission: Get Rescued", "", true)
 	titleFigure.Print()
 
