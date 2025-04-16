@@ -8,8 +8,8 @@ import (
 
 // GenerateRandomEvent returns a random event based on the provided events slice.
 func GenerateRandomEvent(events []string) string {
-	rand.Seed(time.Now().UnixNano())
-	return events[rand.Intn(len(events))]
+	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
+	return events[rng.Intn(len(events))]
 }
 
 // LogMessage formats and logs a message to the console.
